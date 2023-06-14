@@ -1,4 +1,5 @@
-import Expenses from "./components/Expenses";
+import Expenses from "./components/Expenses/Expenses";
+import Card from "./components/UI/Card";
 
 function App() {
 
@@ -29,9 +30,9 @@ function App() {
   return (
     <div>
       <h2>Let's get started!</h2>
-      <div className="expenses">
+      <Card className="expenses">
         <Expenses expenses={expenses}/>
-      </div>
+      </Card>
     </div>
   );
 }
