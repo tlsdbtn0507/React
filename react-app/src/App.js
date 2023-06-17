@@ -26,11 +26,15 @@ function App() {
       amount: 450,
       date: new Date(2021, 5, 12),
     },
-  ]
+  ];
+
+  const addExpenseFunc = expense => {
+    console.log(expense)
+  }
 
   return (
     <div>
-        <NewExpense/>
+        <NewExpense onEmitExpenseData={addExpenseFunc}/>
       <Card className="expenses">
         <Expenses expenses={expenses}/>
       </Card>

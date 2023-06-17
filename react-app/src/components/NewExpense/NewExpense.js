@@ -1,12 +1,19 @@
 import '../../css/NewExpense.css'
 import ExpenseForm from './ExpenseForm'
 
-const NewExpense = () =>{
+const NewExpense = (props) =>{
 
+    const emitExpenseDataFunc = (emited)=> {
+        const expenseData ={
+            ...emited,
+            id:Math.random().toString()
+        };
+        props.onEmitExpenseData(expenseData)
+    }
 
     return(
         <div className='new-expense'>
-            <ExpenseForm />
+            <ExpenseForm emitExpenseData={emitExpenseDataFunc}/>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import '../../css/ExpenseForm.css'
 import { useState } from 'react';
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
 
     const [enteredTitle,setEnteredTitle] = useState('');
     const [enteredAmount,setEnteredAmount] = useState('');
@@ -44,12 +44,16 @@ const ExpenseForm = () => {
         const expenseData = {
             title:enteredTitle,amount:enteredAmount,
             date:new Date(enteredDate)
-        }
+        };
 
-        
+        props.emitExpenseData(expenseData);
+        //react로 상위(부모)컴포넌트에 데이터를 보낼때 보낼(자식)컴포넌트 jsx리턴함수에 props를 넣고
+        //상위(부모)컴포넌트에서도 props주듯 연결하고 콜백함수를 만들어서 props에 바인딩 하면됨
+
         setEnteredAmount('');
         setEnteredDate('');
         setEnteredTitle('');
+        //submit후 초기화
     }
 
     return(
