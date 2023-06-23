@@ -6,7 +6,7 @@ import Card from '../UI/Card';
 
 function ExpenseItems(props) {
   
-  // const [title,setTitle] = useState(props.title);
+  //const [title,setTitle] = useState(props.title);
   //useState는 리엑트 훅(보통 use로시작) 중 하나로 ExpenseItems같은 컴포넌트 함수 안에서 호출해야함
   //useState는 매개변수에 대한 접근을 가능하게 하고 접근이 가능한 변수와 변경 가능한 함수를 반환
   
@@ -15,12 +15,12 @@ function ExpenseItems(props) {
   // const clickF = () => {
   //   setTitle('eungdi');
   //   console.log(title);
-  //   //변경 가능한 함수를 콜백함수 안에서 변경하고 싶은걸 매개변수로 놓으면 됨
-  //   //또한 접근이 가능한 변수는 const로 할당했기 때문에 변경 이전의 값이 남고 한번 더 실행하면
-  //   //useState를 실행 함으로써 컴포넌트 함수가 재 실행해서 변경을 감지하고 변경이 있으면 
-  //   //const지만 title은 setTitle에 넣은 매개변수로 바뀌게 됨
-  //   //또한 ExpenseItems 컴포넌트 함수는 Expenses.js에서 4번 호출되지만 각각의 함수 내에서 따로 동작하기에 
-  //   //한번에 다같이 바뀌지 않음
+  //   변경 가능한 함수를 콜백함수 안에서 변경하고 싶은걸 매개변수로 놓으면 됨
+  //   또한 접근이 가능한 변수는 const로 할당했기 때문에 변경 이전의 값이 남고 한번 더 실행하면
+  //   useState를 실행 함으로써 컴포넌트 함수가 재 실행해서 변경을 감지하고 변경이 있으면 
+  //   const지만 title은 setTitle에 넣은 매개변수로 바뀌게 됨
+  //   또한 ExpenseItems 컴포넌트 함수는 Expenses.js에서 4번 호출되지만 각각의 함수 내에서 따로 동작하기에 
+  //   한번에 다같이 바뀌지 않음
   // };
 
   //리엑트는 컴포넌트(함수)를 실행해 가며 컴포넌트 내에 실행할 함수가 없을때까지 파고 내려감
@@ -32,7 +32,7 @@ function ExpenseItems(props) {
     <ExpenseDate date={props.date}/>
     <div className='expense-item__description'>
       <h2>{props.title}</h2>
-      <div className='expense-item__price'>{props.amount}</div>
+      <div className='expense-item__price'>$ {props.amount}</div>
     </div>
   </Card>
   );
