@@ -3,6 +3,8 @@ import { useState } from 'react';
 
 const ExpenseForm = (props) => {
 
+    const [showForm, setShowForm] = useState(false);
+
     const [enteredTitle,setEnteredTitle] = useState('');
     const [enteredAmount,setEnteredAmount] = useState('');
     const [enteredDate,setEnteredDate] = useState('');
@@ -54,10 +56,29 @@ const ExpenseForm = (props) => {
         setEnteredDate('');
         setEnteredTitle('');
         //submit후 초기화
+
+        setShowForm(false)
     }
+
+    const cancelSub = () => {
+
+        setEnteredAmount('');
+        setEnteredDate('');
+        setEnteredTitle('');
+
+        setShowForm(false);
+    }
+
+    const showFormFunc = () => {
+        setShowForm(true);
+    }
+
 
     return(
         <form onSubmit={submitFunc}>
+            {!showForm && <button onClick={showFormFunc}>Add New Expense</button>}
+            {showForm &&
+            <div> 
             <div className='new-expense__controls'>
                 <div className="new-expense__control">
                     <label>Title</label>
@@ -75,8 +96,11 @@ const ExpenseForm = (props) => {
                 </div>
             </div>
             <div className='new-expense__actions'>
-                <button type='submit'>Add</button>
+                <button onClick={submitFunc}>Add</button>
+                <button type='button' onClick={cancelSub}>Cancel</button>
             </div>
+            </div>
+}
         </form>            
     )
 }
