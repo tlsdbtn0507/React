@@ -2,6 +2,8 @@
     margin: 2rem auto;
     width: 90%;
     max-width: 40rem;
+    background-color: white;
+    border-radius: 10px;
   }
   
   .users ul {

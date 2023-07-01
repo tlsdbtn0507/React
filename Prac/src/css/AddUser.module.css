@@ -3,6 +3,8 @@
     padding: 1rem;
     width: 90%;
     max-width: 40rem;
+    background-color: white;
+    border-radius: 10px;
   }
   
   .input label {
