@@ -15,12 +15,18 @@ function App() {
     })
   }
 
+  const deleteUser = (key) => {
+    setUserList(prev => {
+      const original = [...prev];
+      return original.filter(e=>e.key !== key)
+    })
+  }
 
-  return (
-    <div>
-      <AddUser getUser={handleUsers}/>
-      { userList.length > 0 && <UserList users={userList}/>}
-    </div>
+    return (
+      <div>
+        <AddUser getUser={handleUsers}/>
+        {userList.length > 0 && <UserList getUserKey={deleteUser} users={userList}/>}
+      </div>
   );
 }
 
