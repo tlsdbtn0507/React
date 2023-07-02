@@ -1,8 +1,9 @@
 import styles from '../css/ErrorModal.module.css'
+import Button from './Button';
 
 const ErrorModal = props => {
 
-    const sendClose = e => {
+    const sendClose = () => {
         props.closeModal(false)
     }
 
@@ -10,7 +11,6 @@ const ErrorModal = props => {
     .split(' ')
     .map(e => e[0].toUpperCase() + e.slice(1))
     .join(' ');
-
 
     let content;
 
@@ -21,9 +21,8 @@ const ErrorModal = props => {
         content = 'Your age is Invalid Check your input age'
     else content = 'All your input is Invalid check your inputs'
 
-
     return(
-        <div className={styles.backdrop}>
+        <div className={styles.backdrop} onClick={sendClose}>
             <div className={styles.modal}>
                 <div className={styles.header}>
                     <h2>{title}</h2>
@@ -32,7 +31,7 @@ const ErrorModal = props => {
                     {content}
                 </p>
                 <div className={styles.actions}>
-                    <button onClick={sendClose}>Okay</button>
+                    <Button onClick={sendClose} title="Okay"/>
                 </div>
             </div>
         </div>

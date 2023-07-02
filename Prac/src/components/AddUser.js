@@ -15,7 +15,8 @@ const AddUser = props => {
 
     const user = {
         name:'',
-        age:''
+        age:'',
+        key:''
     };
 
     const errorHandle = (n, a) => {
@@ -28,7 +29,7 @@ const AddUser = props => {
             getErrContent('invalid name')
             return val
         }
-        if(typeof a !== 'number' || !a){
+        if(!a || a < 0){
             getErrContent('invalid age')
             return  val
         }
@@ -61,6 +62,7 @@ const AddUser = props => {
 
         user.name = userName;
         user.age = userAge;
+        user.key = `${userName}${Math.random()}`
 
         props.getUser(user);
 
@@ -73,12 +75,14 @@ const AddUser = props => {
     return(
         <div>
             <form className={styles.input} onSubmit={sendInfo}>
-                <label>UserName</label>
-                    <input onChange={getUserName} value={userName}></input>
-                <label>Age(Years)</label>
-                    <input onChange={getUserAge} value={userAge}></input>
+                <label htmlFor='uName'>UserName</label>
+                    <input id='uName' type='text' 
+                        onChange={getUserName} value={userName}></input>
+                <label htmlFor='uAge'>Age(Years)</label>
+                    <input id='uAge' type='number' 
+                        onChange={getUserAge} value={userAge}></input>
 
-                <Button type='submit'/>
+                <Button type='submit' title='Add User'/>
             </form>
             {errorModal && <ErrorModal 
                 closeModal={handleCloseModal}
