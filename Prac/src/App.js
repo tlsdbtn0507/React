@@ -9,9 +9,7 @@ function App() {
 
   const handleUsers = (user) => {
     setUserList(prev => {
-      const original = [...prev]
-      original.unshift({...user,key:`${user.name}${Math.random()}`})
-      return original
+      return [...prev,user]
     })
   }
 

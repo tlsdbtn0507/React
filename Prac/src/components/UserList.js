@@ -6,11 +6,9 @@ const UserList = props => {
 
     const user = props.users;
 
-
     const sendUserKey = (gotKey) => {
         props.getUserKey(gotKey)
     }
-
 
     return(
         <div className={styles.users}>
