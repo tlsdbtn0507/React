@@ -21,10 +21,11 @@ function App() {
   }
 
     return (
-      <div>
+      //div의 중첩(div soup)을 피하기 위해 div 대신 <>와</>이나 React.Fragment를 사용 할수 있음
+      <>
         <AddUser getUser={handleUsers}/>
         {userList.length > 0 && <UserList getUserKey={deleteUser} users={userList}/>}
-      </div>
+      </>
   );
 }
 
