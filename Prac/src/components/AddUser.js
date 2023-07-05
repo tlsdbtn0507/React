@@ -1,14 +1,20 @@
-import {useState} from 'react'
+import {useState,useRef} from 'react'
 
 import Button from './Button';
 import ErrorModal from './ErrorModal';
+import Wrapper from './Helpers/Wrapper';
+
 
 import styles from '../css/AddUser.module.css'
 
 const AddUser = props => {
 
-    const [userName, setUserName] = useState('');
-    const [userAge, setUserAge] = useState('');
+    const nameInputRef = useRef();
+    const ageInputRef = useRef();
+    //useRef를 쓰면 dom의 밸류값의 접근이 편해짐
+
+    const [,setUserAge] = useState();
+    const [,setUserName] = useState();
 
     const [errorModal,showErrorModal] = useState(false);
     const [errContent, getErrContent] = useState('')
@@ -39,21 +45,11 @@ const AddUser = props => {
         
     };
 
-    const getUserName = (e) => {
-        const input = e.target.value;
-        user.name = setUserName(input);
-    };
-
-    const getUserAge = e => {
-        const input = e.target.value;
-        user.age = `${setUserAge(input)}`;
-    };
-
     const sendInfo = e => {
         e.preventDefault();
 
-        setUserAge('');
-        setUserName('');
+        const userName = nameInputRef.current.value;
+        const userAge = ageInputRef.current.value;
 
         if(!errorHandle(userName,+userAge)){
             showErrorModal(true);
@@ -66,29 +62,33 @@ const AddUser = props => {
 
         props.getUser(user);
 
+        setUserAge('');
+        setUserName('');
+
+        // nameInputRef.current.value = '';
+        // ageInputRef.current.value = ''; 이렇게 해도 가능은 하지만 보통 dom을 ref로 변경 x
+        // 그리고 state를 쓰게 되지 않으면 input태그들은 제어되지 않는 react컴포넌트가 됨
+
     };
 
     const handleCloseModal = (a) => {
         showErrorModal(a)
-    }
+    };
 
     return(
-        <div>
+        <Wrapper>
             <form className={styles.input} onSubmit={sendInfo}>
                 <label htmlFor='uName'>UserName</label>
-                    <input id='uName' type='text' 
-                        onChange={getUserName} value={userName}></input>
+                    <input id='uName' type='text' ref={nameInputRef}></input>
                 <label htmlFor='uAge'>Age(Years)</label>
-                    <input id='uAge' type='number' 
-                        onChange={getUserAge} value={userAge}></input>
-
+                    <input id='uAge' type='number' ref={ageInputRef}></input>
                 <Button type='submit' title='Add User'/>
             </form>
             {errorModal && <ErrorModal 
                 closeModal={handleCloseModal}
                 errMessage={errContent}
             />}
-        </div>
+        </Wrapper>
     );
 
 }
