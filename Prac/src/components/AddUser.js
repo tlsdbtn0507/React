@@ -68,6 +68,7 @@ const AddUser = props => {
         // nameInputRef.current.value = '';
         // ageInputRef.current.value = ''; 이렇게 해도 가능은 하지만 보통 dom을 ref로 변경 x
         // 그리고 state를 쓰게 되지 않으면 input태그들은 제어되지 않는 react컴포넌트가 됨
+        // 제어 되지 않는 컴포넌트란 react가 변경을 감지해서 제 렌더링을 하지 않음
 
     };
 
