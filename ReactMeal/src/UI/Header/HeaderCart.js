@@ -1,26 +1,29 @@
-import classes from '../../Css/HeaderCartButton.module.css'
-import CartContext from '../../store/CartContext';
-import CartIcon from '../CartIcon';
+import classes from "../../Css/HeaderCartButton.module.css";
+import CartContext from "../../store/CartContext";
+import CartIcon from "../CartIcon";
 
-import {useContext} from 'react';
+import { useContext, useEffect, useState } from "react";
 
+const HeaderCart = (props) => {
+  const ctx = useContext(CartContext);
 
-const HeaderCart = props => {
+  const length = ctx.totalAmount === undefined ? 0 : ctx.totalAmount;
 
-    const ctx = useContext(CartContext);
+  //   useEffect(() => {
+  //     console.log(1);
+  //   }, [ctx.totalAmount]);
 
-    return(
-        <>
-            <button className={classes.button}>
-                <div className={classes.icon}><CartIcon/></div>
-                 Your Cart
-                <div className={classes.badge}>
-                    {ctx.totalAmount}
-                </div>
-            </button>
-        </>
-    )
-
+  return (
+    <>
+      <button className={classes.button}>
+        <div className={classes.icon}>
+          <CartIcon />
+        </div>
+        Your Cart
+        <div className={classes.badge}>{length}</div>
+      </button>
+    </>
+  );
 };
 
-export default HeaderCart
+export default HeaderCart;
