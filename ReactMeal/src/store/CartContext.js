@@ -27,10 +27,21 @@ export const CartContextProvider = (props) => {
   }, []);
 
   const addItem = (item) => {
-    ctx.cart.push(item);
+    // let cart = ctx.cart
+
+    if (ctx.cart.map((e) => e.id).includes(item.id)) {
+      //   ctx.cart.push({ ...item, pirce: item.price * 2, count: item.count * 2 });
+      //   const result = ctx.cart.filter((e) => e.id !== item.id);
+      console.log(1);
+      setCart(
+        ctx.cart
+          .filter((e) => e.id !== item.id)
+          .push({ ...item, pirce: item.price * 2, count: item.count * 2 })
+      );
+    } else ctx.cart.push(item);
     setCart(ctx.cart);
     setTotalAmount(ctx.cart.length);
-    // console.log(cart, "addItem");
+    console.log(ctx.cart);
   };
 
   return (

@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import classes from "../../Css/Header.module.css";
 
 import MealsSummary from "../MealsSummary";
 import HeaderCart from "./HeaderCart";
 import AddCartModal from "../../Modal/AddCartModal";
+import CartContext from "../../store/CartContext";
 
 const Header = (props) => {
   const [modal, setModal] = useState(false);
+  const ctx = useContext(CartContext);
 
   const showModal = () => {
-    setModal(true);
+    ctx.totalAmount === undefined ? alert("Add Your Cart!") : setModal(true);
   };
 
   const handleCloseModal = () => {
