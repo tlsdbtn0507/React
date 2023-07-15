@@ -17,9 +17,13 @@ const HeaderCart = (props) => {
   };
 
   useEffect(() => {
-    setTotalAmount(length);
+    const total =
+      ctx.totalAmount === undefined
+        ? 0
+        : ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
+    setTotalAmount(total);
     setBump(bumping);
-  }, [length, bumping]);
+  }, [length, bumping, ctx.totalAmount, ctx.cart]);
 
   return (
     <div className={bump > bumping - 1 ? classes.bump : ""} onClick={click}>
