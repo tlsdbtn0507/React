@@ -28,7 +28,10 @@ const ModalContent = (props) => {
 
   const totalPrice = () => {
     if (ctx.cart === undefined) return "";
-    else return ctx.cart.map((e) => e.price).reduce((a, b) => a + b, 0);
+    else
+      return ctx.cart
+        .map((e) => (e.count > 1 ? e.price * e.count : e.price))
+        .reduce((a, b) => a + b, 0);
   };
 
   console.log(totalPrice().toFixed(2));
