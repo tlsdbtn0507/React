@@ -22,8 +22,11 @@ const ModalContent = (props) => {
   };
 
   const content = () => {
-    if (ctx.cart === undefined) return <></>;
-    else return ctx.cart.map((e) => <CartItem item={e} key={e.id} />);
+    return ctx.cart === undefined ? (
+      <></>
+    ) : (
+      ctx.cart.map((e) => <CartItem item={e} key={e.id} />)
+    );
   };
 
   const totalPrice = () => {
@@ -34,10 +37,13 @@ const ModalContent = (props) => {
         .reduce((a, b) => a + b, 0);
   };
 
-  console.log(totalPrice().toFixed(2));
+  const takeOrder = () => {
+    console.log("Taking Order...");
+    props.sendCloseEvent();
+  };
 
   return (
-    <div className={css.modal} onClick={close}>
+    <div className={css.modal}>
       {content()}
       <div className={card.total}>
         <p>TotalAmount</p>
@@ -47,7 +53,9 @@ const ModalContent = (props) => {
         <button className={card.buttonArt} onClick={close}>
           Close
         </button>
-        <button className={card.button}>Order</button>
+        <button className={card.button} onClick={takeOrder}>
+          Order
+        </button>
       </div>
     </div>
   );
