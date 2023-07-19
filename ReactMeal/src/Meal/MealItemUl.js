@@ -9,7 +9,12 @@ const MealItemUl = (props) => {
   const meal = props.meal;
 
   const makeCart = (p) => {
-    const cart = { ...meal, price: +p.count * meal.price, count: +p.count };
+    const cart = {
+      ...meal,
+      price: +p.count * meal.price,
+      count: +p.count,
+      originalPrice: +meal.price,
+    };
 
     ctx.addCart(cart);
   };

@@ -6,6 +6,8 @@ const CartContext = React.createContext({
   totalMeals: null,
   cart: [],
   addCart: () => {},
+  adding: () => {},
+  removing: () => {},
 });
 
 export const CartContextProvider = (props) => {
@@ -27,21 +29,60 @@ export const CartContextProvider = (props) => {
   }, []);
 
   const addItem = (item) => {
-    // let cart = ctx.cart
-
     if (ctx.cart.map((e) => e.id).includes(item.id)) {
-      //   ctx.cart.push({ ...item, pirce: item.price * 2, count: item.count * 2 });
-      //   const result = ctx.cart.filter((e) => e.id !== item.id);
-      console.log(1);
-      setCart(
-        ctx.cart
-          .filter((e) => e.id !== item.id)
-          .push({ ...item, pirce: item.price * 2, count: item.count * 2 })
-      );
+      const cart = ctx.cart.filter((e) => e.id !== item.id);
+      const [duple] = ctx.cart.filter((e) => e.id === item.id);
+      cart.push({
+        ...item,
+        price: item.price + duple.price,
+        count: item.count + duple.count,
+      });
+      ctx.cart = [...cart];
     } else ctx.cart.push(item);
     setCart(ctx.cart);
-    setTotalAmount(ctx.cart.length);
-    console.log(ctx.cart);
+
+    const totalLength = ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
+
+    setTotalAmount(totalLength);
+  };
+
+  const adding = (item) => {
+    const cart = ctx.cart.filter((e) => e.id !== item.id);
+    const [dupleItem] = ctx.cart.filter((e) => e.id === item.id);
+
+    const dismissItem = ++dupleItem.count;
+    cart.push({
+      ...item,
+      count: dismissItem,
+      price: item.count !== 1 ? item.originalPrice * dismissItem : item.price,
+    });
+    ctx.cart = [...cart];
+    setCart(ctx.cart);
+    const totalLength = ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
+
+    setTotalAmount(totalLength);
+  };
+
+  const removing = (item) => {
+    const cart = ctx.cart.filter((e) => e.id !== item.id);
+    const [dupleItem] = ctx.cart.filter((e) => e.id === item.id);
+
+    const dismissItem = --dupleItem.count;
+    const price = item.originalPrice * dismissItem;
+
+    const pushingItem = {
+      ...item,
+      count: dismissItem,
+      price: price,
+    };
+
+    if (pushingItem.count) cart.push(pushingItem);
+    ctx.cart = [...cart];
+
+    setCart(ctx.cart);
+    const totalLength = ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
+
+    setTotalAmount(totalLength);
   };
 
   return (
@@ -49,6 +90,8 @@ export const CartContextProvider = (props) => {
       value={{
         totalAmount: totalAmount,
         totalMeals: totalMeals,
+        adding: adding,
+        removing: removing,
         addCart: addItem,
         cart: cart,
       }}
