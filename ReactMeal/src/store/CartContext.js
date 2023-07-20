@@ -20,69 +20,49 @@ export const CartContextProvider = (props) => {
 
   useEffect(() => {
     const meals = JSON.parse(localStorage.getItem("meals"));
-
     if (!meals) {
       localStorage.setItem("meals", JSON.stringify(DUMMY_MEALS));
     }
-
     setTotalMeals(meals);
   }, []);
 
+  const setting = () => {
+    setCart(ctx.cart);
+    const totalLength = ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
+    setTotalAmount(totalLength);
+  };
+
+  const getIndexToChange = (item) => {
+    return ctx.cart.findIndex((e) => e.id === item.id);
+  };
+
   const addItem = (item) => {
     if (ctx.cart.map((e) => e.id).includes(item.id)) {
-      const cart = ctx.cart.filter((e) => e.id !== item.id);
-      const [duple] = ctx.cart.filter((e) => e.id === item.id);
-      cart.push({
-        ...item,
-        price: item.price + duple.price,
-        count: item.count + duple.count,
-      });
-      ctx.cart = [...cart];
+      const toChange = getIndexToChange(item);
+
+      ctx.cart[toChange].price += item.price;
+      ctx.cart[toChange].count += item.count;
     } else ctx.cart.push(item);
-    setCart(ctx.cart);
-
-    const totalLength = ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
-
-    setTotalAmount(totalLength);
+    setting();
   };
 
   const adding = (item) => {
-    const cart = ctx.cart.filter((e) => e.id !== item.id);
-    const [dupleItem] = ctx.cart.filter((e) => e.id === item.id);
+    const toChange = getIndexToChange(item);
 
-    const dismissItem = ++dupleItem.count;
-    cart.push({
-      ...item,
-      count: dismissItem,
-      price: item.count !== 1 ? item.originalPrice * dismissItem : item.price,
-    });
-    ctx.cart = [...cart];
-    setCart(ctx.cart);
-    const totalLength = ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
+    ctx.cart[toChange].price += item.originalPrice;
+    ++ctx.cart[toChange].count;
 
-    setTotalAmount(totalLength);
+    setting();
   };
 
   const removing = (item) => {
-    const cart = ctx.cart.filter((e) => e.id !== item.id);
-    const [dupleItem] = ctx.cart.filter((e) => e.id === item.id);
+    const toChange = getIndexToChange(item);
 
-    const dismissItem = --dupleItem.count;
-    const price = item.originalPrice * dismissItem;
+    ctx.cart[toChange].price -= item.originalPrice;
+    --ctx.cart[toChange].count;
+    !ctx.cart[toChange].count && ctx.cart.splice(toChange, 1);
 
-    const pushingItem = {
-      ...item,
-      count: dismissItem,
-      price: price,
-    };
-
-    if (pushingItem.count) cart.push(pushingItem);
-    ctx.cart = [...cart];
-
-    setCart(ctx.cart);
-    const totalLength = ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
-
-    setTotalAmount(totalLength);
+    setting();
   };
 
   return (
