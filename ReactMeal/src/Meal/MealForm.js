@@ -1,11 +1,12 @@
+import { useState } from "react";
 import css from "../Css/MealItemForm.module.css";
 import Input from "./Input";
 
 const MealForm = (props) => {
-  const cart = { count: "1" };
+  const [cart, setCart] = useState({ count: 1 });
 
   const gotInput = (p) => {
-    cart.count = p;
+    setCart({ count: p });
   };
 
   const sendCart = (e) => {
