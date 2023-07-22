@@ -11,7 +11,7 @@ const Header = (props) => {
   const ctx = useContext(CartContext);
 
   const showModal = () => {
-    ctx.totalAmount === undefined ? alert("Add Your Cart!") : setModal(true);
+    ctx.cart === undefined ? alert("Add Your Cart!") : setModal(true);
   };
 
   const handleCloseModal = () => {
@@ -20,13 +20,14 @@ const Header = (props) => {
 
   return (
     <>
-      {modal && <AddCartModal closeModal={handleCloseModal} />}
+      {modal && <AddCartModal onCloseModal={handleCloseModal} />}
       <header className={classes.header}>
         ReactMeals
         <HeaderCart getClick={showModal} />
       </header>
       <div className={classes.mainImage}>
         <img alt="meals" src="img/meals.jpg"></img>
+        {/* img를 로컬로 쓰는게 아니라면 단순히 src에 url을 넣으면 됨 ex)src={} */}
       </div>
       <MealsSummary />
     </>
