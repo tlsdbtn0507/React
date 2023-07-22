@@ -6,10 +6,12 @@ import { useContext, useEffect, useState } from "react";
 
 const HeaderCart = (props) => {
   const ctx = useContext(CartContext);
-  const [totalAmount, setTotalAmount] = useState(0);
   const [bump, setBump] = useState(1);
 
-  const length = ctx.totalAmount === undefined ? 0 : ctx.totalAmount;
+  const length =
+    ctx.cart === undefined
+      ? 0
+      : ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
   const bumping = ctx.totalAmount === undefined ? 0 : ctx.totalAmount;
 
   const click = () => {
@@ -17,13 +19,8 @@ const HeaderCart = (props) => {
   };
 
   useEffect(() => {
-    const total =
-      ctx.totalAmount === undefined
-        ? 0
-        : ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
-    setTotalAmount(total);
     setBump(bumping);
-  }, [length, bumping, ctx.totalAmount, ctx.cart]);
+  }, [bumping]);
 
   return (
     <div className={bump > bumping - 1 ? classes.bump : ""} onClick={click}>
@@ -32,7 +29,7 @@ const HeaderCart = (props) => {
           <CartIcon />
         </div>
         Your Cart
-        <div className={classes.badge}>{totalAmount}</div>
+        <div className={classes.badge}>{length}</div>
       </button>
     </div>
   );
