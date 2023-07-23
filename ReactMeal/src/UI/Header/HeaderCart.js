@@ -5,33 +5,38 @@ import CartIcon from "../CartIcon";
 import { useContext, useEffect, useState } from "react";
 
 const HeaderCart = (props) => {
-  const ctx = useContext(CartContext);
-  const [bump, setBump] = useState(1);
 
-  const length =
-    ctx.cart === undefined
-      ? 0
-      : ctx.cart.map((e) => e.count).reduce((a, b) => a + b, 0);
-  const bumping = ctx.totalAmount === undefined ? 0 : ctx.totalAmount;
+  const { cart, totalAmount } = useContext(CartContext);
+  const [bump, setBump] = useState(false);
+
+  const length = totalAmount === undefined ? 0 : totalAmount;
+
 
   const click = () => {
     props.getClick();
   };
+  const bumping = `${classes.button}  ${bump ? classes.bump : ""}`;
 
   useEffect(() => {
-    setBump(bumping);
-  }, [bumping]);
+
+    if (!cart) return;
+
+    setBump(true);
+    console.log(cart);
+
+    const timer = setTimeout(() => setBump(false), 300);
+
+    return () => clearTimeout(timer);
+  }, [totalAmount]);
 
   return (
-    <div className={bump > bumping - 1 ? classes.bump : ""} onClick={click}>
-      <button className={classes.button}>
-        <div className={classes.icon}>
-          <CartIcon />
-        </div>
-        Your Cart
-        <div className={classes.badge}>{length}</div>
-      </button>
-    </div>
+    <button className={bumping} onClick={click}>
+      <span className={classes.icon}>
+        <CartIcon />
+      </span>
+      Your Cart
+      <div className={classes.badge}>{length}</div>
+    </button>
   );
 };
 
