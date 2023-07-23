@@ -8,7 +8,7 @@ const CartItem = (props) => {
   const ctx = useContext(CartContext);
 
   const adding = () => {
-    ctx.adding(item);
+    ctx.addCart(item);
   };
 
   const reducing = () => {
@@ -16,17 +16,19 @@ const CartItem = (props) => {
   };
 
   return (
-    <div className={css.cartItem}>
-      <h2>{item.name}</h2>
-      <div className={css.summary}>
-        <p className={css.price}>${item.price}</p>
-        <p className={css.amount}>x{item.count}</p>
+    <li className={css.cartItem}>
+      <div>
+        <h2>{item.name}</h2>
+        <div className={css.summary}>
+          <p className={css.price}>${item.price}</p>
+          <p className={css.amount}>x{item.count}</p>
+        </div>
       </div>
       <div className={css.actions}>
         <button onClick={adding}>+</button>
         <button onClick={reducing}>-</button>
       </div>
-    </div>
+    </li>
   );
 };
 export default CartItem;

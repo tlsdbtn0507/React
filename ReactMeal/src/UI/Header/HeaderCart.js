@@ -5,10 +5,12 @@ import CartIcon from "../CartIcon";
 import { useContext, useEffect, useState } from "react";
 
 const HeaderCart = (props) => {
+
   const { cart, totalAmount } = useContext(CartContext);
   const [bump, setBump] = useState(false);
 
   const length = totalAmount === undefined ? 0 : totalAmount;
+
 
   const click = () => {
     props.getClick();
@@ -16,6 +18,7 @@ const HeaderCart = (props) => {
   const bumping = `${classes.button}  ${bump ? classes.bump : ""}`;
 
   useEffect(() => {
+
     if (!cart) return;
 
     setBump(true);

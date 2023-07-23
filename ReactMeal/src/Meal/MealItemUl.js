@@ -13,21 +13,22 @@ const MealItemUl = (props) => {
       ...meal,
       price: +p.count * meal.price,
       count: +p.count,
-      originalPrice: +meal.price,
+      // originalPrice: +meal.price,
     };
 
+    // ctx.addCart(cart);
     ctx.addCart(cart);
   };
 
   return (
-    <div className={classes.meal}>
+    <li className={classes.meal}>
       <div>
         <h3>{meal.name}</h3>
         <div className={classes.description}>{meal.description}</div>
         <div className={classes.price}>$ {meal.price}</div>
       </div>
-      <MealForm sendCart={makeCart} />
-    </div>
+      <MealForm id={meal.id} sendCart={makeCart} />
+    </li>
   );
 };
 

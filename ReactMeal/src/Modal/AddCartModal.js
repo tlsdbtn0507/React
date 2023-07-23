@@ -1,11 +1,7 @@
 import ReactDOM from "react-dom";
-import { useContext } from "react";
-import CartContext from "../store/CartContext";
-
-import CartItem from "./CartItem";
+import ModalContent from "./ModalContent";
 
 import css from "../Css/Modal.module.css";
-import card from "../Css/Cart.module.css";
 
 const BackDrop = (props) => {
   const close = () => {
@@ -13,6 +9,7 @@ const BackDrop = (props) => {
   };
   return <div className={css.backdrop} onClick={close}></div>;
 };
+
 
 const ModalContent = (props) => {
   const ctx = useContext(CartContext);
@@ -51,16 +48,17 @@ const ModalContent = (props) => {
   );
 };
 
+
 const AddCartModal = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <BackDrop sendCloseEvent={props.closeModal} />,
+        <BackDrop sendCloseEvent={props.onCloseModal} />,
         document.getElementById("backdrop-root")
       )}
       ,
       {ReactDOM.createPortal(
-        <ModalContent sendCloseEvent={props.closeModal} />,
+        <ModalContent sendCloseEvent={props.onCloseModal} />,
         document.getElementById("overlay-root")
       )}
     </>
