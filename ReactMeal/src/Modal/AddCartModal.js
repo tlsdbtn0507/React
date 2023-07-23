@@ -21,18 +21,11 @@ const ModalContent = (props) => {
     props.sendCloseEvent();
   };
 
-  const content = () => {
-    return ctx.cart === undefined ? (
-      <></>
-    ) : (
-      ctx.cart.map((e) => <CartItem item={e} key={e.id} />)
-    );
-  };
+  const content = () =>
+    !ctx.cart ? <></> : ctx.cart.map((e) => <CartItem item={e} key={e.id} />);
 
-  const totalPrice = () => {
-    if (ctx.cart === undefined) return "";
-    else return ctx.cart.map((e) => e.price).reduce((a, b) => a + b, 0);
-  };
+  const totalPrice = () =>
+    !ctx.cart ? "" : ctx.cart.map((e) => e.price).reduce((a, b) => a + b, 0);
 
   const takeOrder = () => {
     console.log("Taking Order...");

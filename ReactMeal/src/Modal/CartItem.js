@@ -15,8 +15,6 @@ const CartItem = (props) => {
     ctx.removing(item);
   };
 
-  console.log(item.count);
-
   return (
     <div className={css.cartItem}>
       <h2>{item.name}</h2>
