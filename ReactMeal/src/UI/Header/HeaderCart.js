@@ -5,7 +5,7 @@ import CartIcon from "../CartIcon";
 import { useContext, useEffect, useState } from "react";
 
 const HeaderCart = (props) => {
-  const { cart, totalAmount } = useContext(CartContext);
+  const { totalAmount } = useContext(CartContext);
   const [bump, setBump] = useState(false);
 
   const length = totalAmount === undefined ? 0 : totalAmount;
@@ -16,10 +16,9 @@ const HeaderCart = (props) => {
   const bumping = `${classes.button}  ${bump ? classes.bump : ""}`;
 
   useEffect(() => {
-    if (!cart) return;
+    if (!totalAmount) return;
 
     setBump(true);
-    console.log(cart);
 
     const timer = setTimeout(() => setBump(false), 300);
 
