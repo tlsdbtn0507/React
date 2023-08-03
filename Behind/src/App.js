@@ -18,7 +18,7 @@ function App() {
   //useCallback는 react내부에 useCallback()의 인자를 저장해서 참조타입의 비교(===)를 가능하게 해준다
   //그리고 useCallback에 두번째 인자에 의존성 배열을 넣는데 만약 useCallback함수에 다른 state나 변수 등이
   //추가 되면 js의 closure로 인해 useCallback에 들어간 state나 변수가 고정되어 불변하기 때문에 useCallback
-  //안에 state나 변수를 넣는다면 두번째 인자에 의존성을 나타낼 state나 변수를 넣어야 한다
+  //안에 state나 변수가 들어가야 한다면 두번째 인자에 의존성을 나타낼 state나 변수를 넣어야 한다
 
   return (
     <div className="app">
