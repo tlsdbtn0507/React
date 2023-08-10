@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
-import { DUMMY_MEALS } from "../Meal/dummy-meals";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 
 const CartContext = React.createContext({
   totalAmount: 0,
-  totalMeals: null,
+  totalMeals: [],
   cart: [],
   addCart: () => {},
   adding: () => {},
@@ -18,13 +17,30 @@ export const CartContextProvider = (props) => {
 
   const ctx = useContext(CartContext);
 
-  useEffect(() => {
-    const meals = JSON.parse(localStorage.getItem("meals"));
-    if (!meals) {
-      localStorage.setItem("meals", JSON.stringify(DUMMY_MEALS));
-    }
-    setTotalMeals(meals);
+  const fetchMeals = useCallback(async () => {
+    const data = await fetch(
+      "https://react-http-f3119-default-rtdb.firebaseio.com/tasks.json"
+    );
+    const mapping = Object.values(await data.json());
+
+    const meals = mapping.map((e) => {
+      return { id: `m${mapping.indexOf(e) + 1}`, ...e };
+    });
+    // localStorage.setItem("meals", JSON.stringify(meals));
+    return meals;
   }, []);
+
+  useEffect(() => {
+    // const meals = JSON.parse(localStorage.getItem("meals"));
+
+    // console.log(meals);
+    // if (meals === null) {
+    //   localStorage.setItem("meals", JSON.stringify(fetchMeals()));
+    setTotalMeals(fetchMeals());
+    //   console.log(fetchMeals);
+    // }
+    // setTotalMeals(meals);
+  }, [fetchMeals]);
 
   const setting = () => {
     setCart(ctx.cart);
