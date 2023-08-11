@@ -19,8 +19,11 @@ const MealTems = () => {
       });
       return meals;
     } catch (error) {
-      alert(error.message);
-      return <b>Error Occured!</b>;
+      return (
+        <section className={css.MealsErr}>
+          <b>Error Occured!</b> Error is caused by {error.message}
+        </section>
+      );
     }
   }, []);
 
@@ -32,7 +35,8 @@ const MealTems = () => {
   }, [getFetchMeals]);
 
   const content = () => {
-    if (totalMeals === undefined) return <p>getting</p>;
+    if (totalMeals === undefined)
+      return <p className={css.MealsLoading}>getting</p>;
     else {
       return totalMeals.length
         ? totalMeals.map((e) => <MealItemUl meal={e} key={e.id} />)
