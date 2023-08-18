@@ -1,57 +1,68 @@
 import classes from "../Css/Checkout.module.css";
 import { useContext, useState } from "react";
 import cartContext from "../store/CartContext";
+import Input from "./Input";
 
 const Checkout = (props) => {
-  const [nameInput, setNameInput] = useState("");
+  const [btnAvail, setBtnAvail] = useState(false);
+  const [toSendForm, setToSendForm] = useState({});
 
-  const confirmHandler = (event) => {
+  const confirmHandler = async (event) => {
     event.preventDefault();
-    console.log(nameInput);
+
+    const receiver = toSendForm.map((e) => {
+      const returnOBJ = {};
+      returnOBJ[e.type] = e.value;
+      return returnOBJ;
+    });
+
+    const cart = ctx.cart.map((e) => {
+      return { id: e.id, foodName: e.name, price: e.price, count: e.count };
+    });
+
+    const content = { receiver: Object.assign(...receiver), food: cart };
+
+    try {
+      const data = await fetch(
+        "https://react-http-f3119-default-rtdb.firebaseio.com/orders.json",
+        {
+          method: "POST",
+          body: JSON.stringify(content),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const res = await data.json();
+      return res;
+    } catch (error) {}
   };
 
   const ctx = useContext(cartContext);
 
-  const handleName = (e) => {
-    const target = e.target.value;
-    setNameInput(target);
+  const checkForms = (e) => {
+    setBtnAvail(e);
   };
 
-  const setName = (e) => {
-    const target = e.target.value;
-    // setNameInput(target);
-    console.log(target);
+  const getForm = (forms) => {
+    if (forms.every((e) => e.value !== "")) setToSendForm(forms);
   };
 
   return (
     <form className={classes.form} onSubmit={confirmHandler}>
-      <div className={classes.control}>
-        <label htmlFor="name">Your Name</label>
-        <input
-          type="text"
-          id="name"
-          onChange={handleName}
-          onBlur={setName}
-          value={nameInput}
-        />
-      </div>
-      <div className={classes.control}>
-        <label htmlFor="street">Street</label>
-        <input type="text" id="street" />
-      </div>
-      <div className={classes.control}>
-        <label htmlFor="postal">Postal Code</label>
-        <input type="text" id="postal" />
-      </div>
-      <div className={classes.control}>
-        <label htmlFor="city">City</label>
-        <input type="text" id="city" />
-      </div>
+      <Input sendFormValids={checkForms} sendForm={getForm} />
       <div className={classes.actions}>
         <button type="button" onClick={props.onCancel}>
           Cancel
         </button>
-        <button className={classes.submit}>Confirm</button>
+        <button
+          onClick={confirmHandler}
+          className={classes.submit}
+          disabled={!btnAvail}
+        >
+          Confirm
+        </button>
       </div>
     </form>
   );
