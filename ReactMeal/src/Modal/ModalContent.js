@@ -26,20 +26,20 @@ const ModalContent = (props) => {
     setShowCheckout(true);
   };
 
-  const checkout = () =>
-    showCheckout ? (
-      <Checkout
-        onCancel={() => {
-          setShowCheckout(false);
-        }}
-      />
-    ) : (
-      <>
-        {content()}
-        <div className={card.total}>
-          <p>TotalAmount</p>
-          <p>${totalPrice().toFixed(2)}</p>
-        </div>
+  return (
+    <div className={css.modal}>
+      {content()}
+      <div className={card.total}>
+        <p>TotalAmount</p>
+        <p>${totalPrice().toFixed(2)}</p>
+      </div>
+      {showCheckout ? (
+        <Checkout
+          onCancel={() => {
+            setShowCheckout(false);
+          }}
+        />
+      ) : (
         <div className={card.actions}>
           <button className={card.buttonArt} onClick={close}>
             Close
@@ -48,9 +48,9 @@ const ModalContent = (props) => {
             Order
           </button>
         </div>
-      </>
-    );
-  return <div className={css.modal}>{checkout()}</div>;
+      )}
+    </div>
+  );
 };
 
 export default ModalContent;

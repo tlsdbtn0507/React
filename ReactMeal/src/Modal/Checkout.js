@@ -23,7 +23,7 @@ const Checkout = (props) => {
     const content = { receiver: Object.assign(...receiver), food: cart };
 
     try {
-      const data = await fetch(
+      await fetch(
         "https://react-http-f3119-default-rtdb.firebaseio.com/orders.json",
         {
           method: "POST",
@@ -33,10 +33,11 @@ const Checkout = (props) => {
           },
         }
       );
-
-      const res = await data.json();
-      return res;
-    } catch (error) {}
+      alert("Order is Successfully done!");
+      window.location.reload();
+    } catch (error) {
+      alert("error is happened");
+    }
   };
 
   const ctx = useContext(cartContext);

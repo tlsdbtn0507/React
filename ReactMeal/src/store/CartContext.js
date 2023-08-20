@@ -26,20 +26,11 @@ export const CartContextProvider = (props) => {
     const meals = mapping.map((e) => {
       return { id: `m${mapping.indexOf(e) + 1}`, ...e };
     });
-    // localStorage.setItem("meals", JSON.stringify(meals));
     return meals;
   }, []);
 
   useEffect(() => {
-    // const meals = JSON.parse(localStorage.getItem("meals"));
-
-    // console.log(meals);
-    // if (meals === null) {
-    //   localStorage.setItem("meals", JSON.stringify(fetchMeals()));
     setTotalMeals(fetchMeals());
-    //   console.log(fetchMeals);
-    // }
-    // setTotalMeals(meals);
   }, [fetchMeals]);
 
   const setting = () => {

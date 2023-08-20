@@ -34,7 +34,9 @@ const Input = (props) => {
 
   const content = inputObj.map((e) => (
     <div
-      className={e.check === true ? classes.control : classes.invalid}
+      className={`${classes.control} ${
+        e.check === true ? "" : classes.invalid
+      }`}
       key={e.type}
     >
       <label htmlFor={e.type}>{e.label}</label>
@@ -45,7 +47,7 @@ const Input = (props) => {
         onBlur={setName}
         value={e.value}
       />
-      {e.check === true ? "" : "Invalid Input"}
+      {e.check === true ? "" : `Please check your ${e.label}`}
     </div>
   ));
 
