@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { counterAction } from "../store";
+import { counterAction } from "../store/counter";
 
 import { useRef } from "react";
 
@@ -18,7 +18,6 @@ const Counter = () => {
 
   const increase = () => {
     const customVal = +inputRef.current.value;
-    // dispatch({ type: target, value: customVal });
     dispatch(counterAction.increase(customVal));
   };
 
