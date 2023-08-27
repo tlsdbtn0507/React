@@ -1,4 +1,4 @@
-import classes from './CartButton.module.css';
+import classes from "../../css/CartButton.module.css";
 
 const CartButton = (props) => {
   return (
