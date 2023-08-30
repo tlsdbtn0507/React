@@ -44,6 +44,9 @@ export const sendCartToServer = (cart) => {
         })
       );
     }
+    setTimeout(() => {
+      dispatch(uiAction.sendCartResult({}));
+    }, 3000);
   };
 };
 

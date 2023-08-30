@@ -30,7 +30,9 @@ function App() {
 
   return (
     <>
-      {sendCartResult && <Notification state={sendCartResult} />}
+      {Object.keys(sendCartResult).length !== 0 && (
+        <Notification state={sendCartResult} />
+      )}
       <Layout>
         {cartIsValid && <Cart />}
         <Products />
