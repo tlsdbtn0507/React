@@ -6,6 +6,7 @@ import Cart from "./components/Cart/Cart";
 import Layout from "./components/Layout/Layout";
 import Products from "./components/Shop/Products";
 import Notification from "./components/UI/Notification";
+import { uiAction } from "./store/uiSlice";
 
 let isShow = true;
 
@@ -25,16 +26,18 @@ function App() {
       isShow = false;
       return;
     }
-    if (cart.isFirst) dispatch(sendCartToServer(cart));
+    if (cart.isFirst) dispatch(sendCartToServer(cart, cart.commandType));
+
+    if (!cart.item.length) dispatch(uiAction.toggle());
   }, [cart, dispatch]);
+
+  const showNotif = Object.keys(sendCartResult).length;
 
   return (
     <>
-      {Object.keys(sendCartResult).length !== 0 && (
-        <Notification state={sendCartResult} />
-      )}
+      {showNotif !== 0 && <Notification state={sendCartResult} />}
       <Layout>
-        {cartIsValid && <Cart />}
+        {cartIsValid && cart.item.length && <Cart />}
         <Products />
       </Layout>
     </>
