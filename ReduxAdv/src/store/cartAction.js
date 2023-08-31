@@ -1,13 +1,13 @@
 import { cartAction } from "./cartSlice";
 import { uiAction } from "./uiSlice";
 
-export const sendCartToServer = (cart) => {
+export const sendCartToServer = (cart, action) => {
   return async (dispatch) => {
     dispatch(
       uiAction.sendCartResult({
         status: "pending",
         title: "Sending",
-        message: "Sending Data...",
+        message: `Sending Data...(${action})`,
       })
     );
 
@@ -32,7 +32,7 @@ export const sendCartToServer = (cart) => {
         uiAction.sendCartResult({
           status: "success",
           title: "Success!",
-          message: "Sending Data is successfully done!",
+          message: `Sending Data(${action}) is successfully done!`,
         })
       );
     } catch (error) {
@@ -40,10 +40,13 @@ export const sendCartToServer = (cart) => {
         uiAction.sendCartResult({
           status: "error",
           title: "Error Occured",
-          message: "Sending Data is failed!",
+          message: `Sending Data(${action}) is failed!`,
         })
       );
     }
+    setTimeout(() => {
+      dispatch(uiAction.sendCartResult({}));
+    }, 3000);
   };
 };
 
