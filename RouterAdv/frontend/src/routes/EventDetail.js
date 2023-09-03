@@ -1,7 +1,11 @@
 import EventItem from "../components/EventItem";
 
 const EventDetailPage = () => {
-  return <EventItem />;
+  return (
+    <>
+      <EventItem />
+    </>
+  );
 };
 
 export default EventDetailPage;
