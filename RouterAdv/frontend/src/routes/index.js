@@ -1,14 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./Root";
 import EventRoot from "./EventRoot";
-import EventForm from "../components/EventForm";
-import EventDetailPage from "./EventDetail";
+import EventDetailPage, {
+  deleteEventAction,
+  eventItemLoader,
+} from "./EventDetail";
 import EventEdit from "./EventEdit";
 import HomePage from "./Home";
 import EventsPage from "./Events";
 
 import { fetchingEvents } from "./Events";
 import ErrorPage from "./Error";
+import NewEventPage, { newEventAction } from "./NewEvent";
 
 const route = createBrowserRouter([
   {
@@ -31,16 +34,25 @@ const route = createBrowserRouter([
             // EventsPage가 렌더링 될때만 백엔드에서 데이터를 불러올 함수를 여기서 지정 및 실행 할 수 있음
           },
           {
-            path: "new",
-            element: <EventForm />,
-          },
-          {
             path: ":id",
-            element: <EventDetailPage />,
+            id: "detail",
+            loader: eventItemLoader,
+            children: [
+              {
+                index: true,
+                element: <EventDetailPage />,
+                action: deleteEventAction,
+              },
+              {
+                path: "edit",
+                element: <EventEdit />,
+              },
+            ],
           },
           {
-            path: ":id/edit",
-            element: <EventEdit />,
+            path: "new",
+            element: <NewEventPage />,
+            action: newEventAction,
           },
         ],
       },
