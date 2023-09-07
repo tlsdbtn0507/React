@@ -11,7 +11,8 @@ import EventsPage from "./Events";
 
 import { fetchingEvents } from "./Events";
 import ErrorPage from "./Error";
-import NewEventPage, { newEventAction } from "./NewEvent";
+import NewEventPage from "./NewEvent";
+import { manipulEventAction } from "../resource/action";
 
 const route = createBrowserRouter([
   {
@@ -46,13 +47,14 @@ const route = createBrowserRouter([
               {
                 path: "edit",
                 element: <EventEdit />,
+                action: manipulEventAction,
               },
             ],
           },
           {
             path: "new",
             element: <NewEventPage />,
-            action: newEventAction,
+            action: manipulEventAction,
           },
         ],
       },
