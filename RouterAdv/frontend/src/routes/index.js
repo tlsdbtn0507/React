@@ -1,18 +1,20 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "./Root";
 import EventRoot from "./EventRoot";
-import EventDetailPage, {
-  deleteEventAction,
-  eventItemLoader,
-} from "./EventDetail";
+import EventDetailPage from "./EventDetail";
 import EventEdit from "./EventEdit";
 import HomePage from "./Home";
 import EventsPage from "./Events";
-
-import { fetchingEvents } from "./Events";
 import ErrorPage from "./Error";
 import NewEventPage from "./NewEvent";
-import { manipulEventAction } from "../resource/action";
+import NewsletterPage from "./Newsletter";
+
+import {
+  manipulEventAction,
+  mailAction,
+  deleteEventAction,
+} from "../resource/action";
+import { eventItemLoader, fetchingEvents } from "../resource/loader";
 
 const route = createBrowserRouter([
   {
@@ -23,6 +25,11 @@ const route = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "newsletter",
+        element: <NewsletterPage />,
+        action: mailAction,
       },
       {
         path: "events",

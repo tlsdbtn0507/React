@@ -1,4 +1,4 @@
-import { redirect } from "react-router-dom";
+import { redirect, json } from "react-router-dom";
 
 export const manipulEventAction = async ({ request, params }) => {
   const data = await request.formData();
@@ -30,4 +30,34 @@ export const manipulEventAction = async ({ request, params }) => {
     );
 
   return redirect("/events");
+};
+
+export const deleteEventAction = async ({ request, params }) => {
+  const { id } = params;
+
+  const res = await fetch(`${process.env.REACT_APP_ROUTER_API}events/${id}`, {
+    method: request.method,
+  });
+
+  console.log(res);
+
+  if (!res.ok) {
+    return json(
+      { message: "Could not Delete Event" },
+      {
+        status: 500,
+      }
+    );
+  }
+
+  return redirect("/events");
+};
+
+export const mailAction = async ({ request }) => {
+  const data = await request.formData();
+  const email = data.get("email");
+
+  // send to backend newsletter server ...
+  console.log(email);
+  return { message: "Signup successful!" };
 };
