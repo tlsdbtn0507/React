@@ -1,4 +1,5 @@
-import { json, defer } from "react-router-dom";
+import { json, defer, redirect } from "react-router-dom";
+import { getAuth } from "./auth";
 
 export async function eventItemLoader({ request, params }) {
   const { id } = params;
@@ -27,7 +28,7 @@ const loader = async () => {
 
 //loader 안에서 쿠키 및 로컬스토리지 접근 등 다양한 js기능을 쓸 수 있지만 리엑트 훅은 사용 할 수 없음
 
-const jsonReturn = (msg, code) =>
+export const jsonReturn = (msg, code) =>
   json(
     {
       message: msg,
@@ -39,3 +40,11 @@ export const fetchingEvents = () =>
   defer({
     events: loader(),
   });
+
+export const authCheck = () => {
+  const token = getAuth();
+
+  if (!token) return redirect("/auth");
+
+  return null;
+};
