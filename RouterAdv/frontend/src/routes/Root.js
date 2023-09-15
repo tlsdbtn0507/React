@@ -1,6 +1,7 @@
 import { Outlet, useLoaderData, useSubmit } from "react-router-dom";
 import MainNavigation from "../components/MainNavigation";
 import { useEffect } from "react";
+import { getTokenDuration } from "../resource/auth";
 
 const Root = () => {
   const token = useLoaderData();
@@ -14,7 +15,7 @@ const Root = () => {
 
     setTimeout(() => {
       submit(null, { action: "/logout", method: "post" });
-    }, 60 * 60 * 1000);
+    }, getTokenDuration);
   }, [token, submit]);
 
   return (
