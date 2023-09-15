@@ -27,7 +27,7 @@ const loader = async () => {
 
 //loader 안에서 쿠키 및 로컬스토리지 접근 등 다양한 js기능을 쓸 수 있지만 리엑트 훅은 사용 할 수 없음
 
-const jsonReturn = (msg, code) =>
+export const jsonReturn = (msg, code) =>
   json(
     {
       message: msg,

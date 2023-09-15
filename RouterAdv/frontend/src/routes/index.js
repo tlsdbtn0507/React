@@ -13,8 +13,10 @@ import {
   manipulEventAction,
   mailAction,
   deleteEventAction,
+  authAction,
 } from "../resource/action";
 import { eventItemLoader, fetchingEvents } from "../resource/loader";
+import AuthenticationPage from "./Authentication";
 
 const route = createBrowserRouter([
   {
@@ -25,6 +27,11 @@ const route = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "auth",
+        element: <AuthenticationPage />,
+        action: authAction,
       },
       {
         path: "newsletter",

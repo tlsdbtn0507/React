@@ -1,4 +1,5 @@
-import { redirect, json } from "react-router-dom";
+import { redirect } from "react-router-dom";
+import { jsonReturn } from "./loader";
 
 export const manipulEventAction = async ({ request, params }) => {
   const data = await request.formData();
@@ -32,6 +33,37 @@ export const manipulEventAction = async ({ request, params }) => {
   return redirect("/events");
 };
 
+export const authAction = async ({ request }) => {
+  const param = new URL(request.url).searchParams;
+
+  const mode = param.get("mode") || "login";
+
+  if (mode !== "login" && mode !== "signup")
+    return jsonReturn("Unsupported Mode", 422);
+
+  const data = await request.formData();
+
+  const authForm = {
+    email: data.get("email"),
+    password: data.get("password"),
+  };
+
+  const res = await fetch(`${process.env.REACT_APP_ROUTER_API}${mode}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(authForm),
+  });
+
+  if (res.status === 422 || res.status === 401)
+    return jsonReturn("Wrong Auth", 422);
+  // return res;
+
+  if (!res.ok)
+    return jsonReturn("Something got Wrong, Please try another", 500);
+
+  return redirect("/");
+};
+
 export const deleteEventAction = async ({ request, params }) => {
   const { id } = params;
 
@@ -39,15 +71,8 @@ export const deleteEventAction = async ({ request, params }) => {
     method: request.method,
   });
 
-  console.log(res);
-
   if (!res.ok) {
-    return json(
-      { message: "Could not Delete Event" },
-      {
-        status: 500,
-      }
-    );
+    return jsonReturn("Could not Delete Event", 500);
   }
 
   return redirect("/events");
