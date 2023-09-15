@@ -14,15 +14,19 @@ import {
   mailAction,
   deleteEventAction,
   authAction,
+  logoutAction,
 } from "../resource/action";
-import { eventItemLoader, fetchingEvents } from "../resource/loader";
+import { authCheck, eventItemLoader, fetchingEvents } from "../resource/loader";
 import AuthenticationPage from "./Authentication";
+import { getAuth } from "../resource/auth";
 
 const route = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
+    id: "root",
+    loader: getAuth,
     children: [
       {
         index: true,
@@ -32,6 +36,10 @@ const route = createBrowserRouter([
         path: "auth",
         element: <AuthenticationPage />,
         action: authAction,
+      },
+      {
+        path: "logout",
+        action: logoutAction,
       },
       {
         path: "newsletter",
@@ -62,6 +70,7 @@ const route = createBrowserRouter([
                 path: "edit",
                 element: <EventEdit />,
                 action: manipulEventAction,
+                loader: authCheck,
               },
             ],
           },
@@ -69,6 +78,7 @@ const route = createBrowserRouter([
             path: "new",
             element: <NewEventPage />,
             action: manipulEventAction,
+            loader: authCheck,
           },
         ],
       },

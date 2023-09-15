@@ -1,4 +1,5 @@
-import { json, defer } from "react-router-dom";
+import { json, defer, redirect } from "react-router-dom";
+import { getAuth } from "./auth";
 
 export async function eventItemLoader({ request, params }) {
   const { id } = params;
@@ -39,3 +40,11 @@ export const fetchingEvents = () =>
   defer({
     events: loader(),
   });
+
+export const authCheck = () => {
+  const token = getAuth();
+
+  if (!token) return redirect("/auth");
+
+  return null;
+};

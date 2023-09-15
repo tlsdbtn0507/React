@@ -1,5 +1,6 @@
 import { redirect } from "react-router-dom";
 import { jsonReturn } from "./loader";
+import { getAuth } from "./auth";
 
 export const manipulEventAction = async ({ request, params }) => {
   const data = await request.formData();
@@ -19,6 +20,7 @@ export const manipulEventAction = async ({ request, params }) => {
       method: request.method,
       headers: {
         "Content-Type": "application/json",
+        Authorization: "Bearer " + getAuth(),
       },
       body: JSON.stringify(sendDataForm),
     }
@@ -54,12 +56,14 @@ export const authAction = async ({ request }) => {
     body: JSON.stringify(authForm),
   });
 
-  if (res.status === 422 || res.status === 401)
-    return jsonReturn("Wrong Auth", 422);
-  // return res;
+  if (res.status === 422 || res.status === 401) return res;
 
   if (!res.ok)
     return jsonReturn("Something got Wrong, Please try another", 500);
+
+  const { token } = await res.json();
+
+  localStorage.setItem("token", token);
 
   return redirect("/");
 };
@@ -69,6 +73,7 @@ export const deleteEventAction = async ({ request, params }) => {
 
   const res = await fetch(`${process.env.REACT_APP_ROUTER_API}events/${id}`, {
     method: request.method,
+    headers: { Authorization: "Bearer " + getAuth() },
   });
 
   if (!res.ok) {
@@ -85,4 +90,9 @@ export const mailAction = async ({ request }) => {
   // send to backend newsletter server ...
   console.log(email);
   return { message: "Signup successful!" };
+};
+
+export const logoutAction = () => {
+  localStorage.removeItem("token");
+  return redirect("/");
 };
