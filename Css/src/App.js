@@ -18,8 +18,8 @@ const App = () => {
   return (
     <div className="App">
       <h1>React Animations</h1>
-      <Modal show={showModal} closed={closeModalHandler} />
-      <Backdrop show={showModal} />
+      {showModal ? <Modal show={showModal} closed={closeModalHandler} /> : null}
+      {showModal ? <Backdrop show={showModal} /> : null}
       <button className="Button" onClick={showModalHandler}>
         Open Modal
       </button>
