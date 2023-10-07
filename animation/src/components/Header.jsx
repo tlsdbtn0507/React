@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import NewChallenge from "./NewChallenge.jsx";
 
@@ -24,9 +24,15 @@ export default function Header() {
 
       <header id="main-header">
         <h1>Your Challenges</h1>
-        <button onClick={handleStartAddNewChallenge} className="button">
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          transition={{ type: "spring", stiffness: 1000, velocity: 1 }}
+          //type을 스프링처럼 해주고 stiffness은 빠릿함정도 velocity는 말그대로 속도
+          onClick={handleStartAddNewChallenge}
+          className="button"
+        >
           Add Challenge
-        </button>
+        </motion.button>
       </header>
     </>
   );
