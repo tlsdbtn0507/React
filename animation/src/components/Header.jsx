@@ -25,7 +25,7 @@ export default function Header() {
       <header id="main-header">
         <h1>Your Challenges</h1>
         <motion.button
-          whileHover={{ scale: 1.1 }}
+          whileHover={{ scale: 1.1, backgroundColor: "purple" }}
           transition={{ type: "spring", stiffness: 1000, velocity: 1 }}
           //type을 스프링처럼 해주고 stiffness은 빠릿함정도 velocity는 말그대로 속도
           onClick={handleStartAddNewChallenge}

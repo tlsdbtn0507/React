@@ -1,8 +1,9 @@
-import { useContext, useRef, useState } from 'react';
+import { useContext, useRef, useState } from "react";
+import { motion, transform } from "framer-motion";
 
-import { ChallengesContext } from '../store/challenges-context.jsx';
-import Modal from './Modal.jsx';
-import images from '../assets/images.js';
+import { ChallengesContext } from "../store/challenges-context.jsx";
+import Modal from "./Modal.jsx";
+import images from "../assets/images.js";
 
 export default function NewChallenge({ onDone }) {
   const title = useRef();
@@ -56,17 +57,32 @@ export default function NewChallenge({ onDone }) {
           <input ref={deadline} type="date" name="deadline" id="deadline" />
         </p>
 
-        <ul id="new-challenge-images">
+        <motion.ul
+          id="new-challenge-images"
+          variants={{ visible: { transition: { staggerChildren: 0.05 } } }}
+          //하위 컴포넌트의 애니메이션 delay를 줌 staggerChildren의 값은 변환 속도, 낮을 수록 빠름
+        >
           {images.map((image) => (
-            <li
+            <motion.li
+              variants={{
+                hidden: { opacity: 0, scale: 0.5 },
+                visible: { opacity: 1, scale: [0.8, 1.5, 1] }, //배열의 순서에 따라 사이즈 조절 가능
+              }}
               key={image.alt}
               onClick={() => handleSelectImage(image)}
-              className={selectedImage === image ? 'selected' : undefined}
+              className={selectedImage === image ? "selected" : undefined}
+              // exit="visible"
+              // exit이 없으면 이 컴포넌트의 부모인 modal에서 hidden으로 바뀔때 (없어질 때) 하위 컴포넌트도 hidden속성이 적용되어
+              // 이 컴포넌트의 애니메이션이 다 적용 되고 모달이 사라지는 이슈가 있어서 exit을 넣어야함
+
+              //하지만 variants에서 쓴 값을 그대로 넣으면 애니 적용이 안되기 때문에
+              exit={{ opacity: 1, scale: 1 }} //코드를 중복해서 써야함
+              transition={{ type: "spring" }}
             >
               <img {...image} />
-            </li>
+            </motion.li>
           ))}
-        </ul>
+        </motion.ul>
 
         <p className="new-challenge-actions">
           <button type="button" onClick={onDone}>
