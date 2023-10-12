@@ -28,7 +28,8 @@ export default function ChallengeItem({
   }
 
   return (
-    <li>
+    <motion.li layout>
+      {/* layout: 리스트가 사라질때 자연스럽게 올라오게함 */}
       <article className="challenge-item">
         <header>
           <img {...challenge.image} />
@@ -69,6 +70,6 @@ export default function ChallengeItem({
           )}
         </div>
       </article>
-    </li>
+    </motion.li>
   );
 }
