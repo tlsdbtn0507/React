@@ -1,24 +1,56 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import cityImg from '../assets/city.jpg';
-import heroImg from '../assets/hero.png';
+import { motion, useScroll, useTransform } from "framer-motion";
+
+import cityImg from "../assets/city.jpg";
+import heroImg from "../assets/hero.png";
 
 export default function WelcomePage() {
+  const { scrollY } = useScroll();
+
+  const cityY = useTransform(scrollY, [0, 200], [0, -100]);
+  const cityOpacity = useTransform(
+    scrollY,
+    [0, 200, 300, 500],
+    [1, 0.5, 0.5, 0]
+  );
+  //scrollY가 유저의 스크롤 움직임 이고 위 함수의 2번째 인자 배열(스크롤 량)의 각 요소(0,200,300...)만큼 스크롤 하면
+  //3번째 인자 배열(앞서 넣은 style의 변화 요소)의 각 요소(여기선 opacity정도)를 적용하게해줌
+
+  const heroY = useTransform(scrollY, [0, 200], [0, -100]);
+  const heroOpacity = useTransform(scrollY, [0, 200, 300], [1, 1, 0]);
+
+  const textY = useTransform(scrollY, [0, 100, 200], [1, 1.3, 1.6]);
+  const textOpacity = useTransform(
+    scrollY,
+    [0, 150, 300, 500],
+    [1, 1.5, 1.5, 0]
+  );
+
   return (
     <>
       <header id="welcome-header">
-        <div id="welcome-header-content">
+        <motion.div
+          id="welcome-header-content"
+          style={{ opacity: textOpacity, scale: textY }}
+        >
           <h1>Ready for a challenge?</h1>
           <Link id="cta-link" to="/challenges">
             Get Started
           </Link>
-        </div>
-        <img
+        </motion.div>
+        <motion.img
+          style={{ opacity: cityOpacity, y: cityY }}
           src={cityImg}
           alt="A city skyline touched by sunlight"
           id="city-image"
         />
-        <img src={heroImg} alt="A superhero wearing a cape" id="hero-image" />
+        <motion.img
+          style={{ opacity: heroOpacity, y: heroY }}
+          src={heroImg}
+          alt="A superhero wearing a cape"
+          id="hero-image"
+        />
       </header>
       <main id="welcome-content">
         <section>
