@@ -30,6 +30,102 @@ const ModalContent = (props) => {
         <span>TotalAmount</span>
         <p>${totalPrice}</p>
       </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
+      <div className={card.total}>
+        <span>TotalAmount</span>
+        <p>${totalPrice}</p>
+      </div>
       <div className={card.actions}>
         <button className={card.buttonArt} onClick={close}>
           Close
