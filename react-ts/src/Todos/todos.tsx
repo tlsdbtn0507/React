@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import Todo from "../type/todo";
 import TodoComponent from "./todoComp";
+import css from '../css/css.module.css'
+import { TodoContext } from "../store/store";
 
-function Todos(props:{items:Todo[]}){
+function Todos(){
+
+  const todosCtx = useContext(TodoContext);
 
   return (
-    <ul>
-      {props.items.map(e=><TodoComponent key={e.id} text={e.text}/>)}
+    <ul className={css.todos}>
+      {todosCtx.items.map(e=><TodoComponent key={e.id} todo={e}/>)}
     </ul>
   )
 }

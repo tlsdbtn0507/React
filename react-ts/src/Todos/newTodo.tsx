@@ -1,6 +1,10 @@
-import { useRef } from "react"
+import { useContext, useRef } from "react"
+import css from '../css/css.module.css'
+import { TodoContext } from "../store/store";
 
-const NewTodo:React.FC<{addTodo:(text:string)=>void}> = (props) => {
+// const NewTodo:React.FC<{addTodo:(text:string)=>void}> = (props) => {
+const NewTodo:React.FC = () => {
+  const todosCtx = useContext(TodoContext);
 
   //HTMLInputElement의 타입을 가진 useRef는 초기값으로 '' 말고 null을 넣어줘야한다
   const inputRef = useRef<HTMLInputElement>(null);
@@ -17,12 +21,14 @@ const NewTodo:React.FC<{addTodo:(text:string)=>void}> = (props) => {
 
     if(enteredValue.trim().length === 0) return alert('wrong input value')
 
-    props.addTodo(enteredValue);
+    
 
+    todosCtx.addTodo(enteredValue);
+    
   }
 
   return(
-    <form onSubmit={submitTodo}>
+    <form className={css.form} onSubmit={submitTodo}>
       <label htmlFor="text">todo</label>
       <input type="text" id="text" required ref={inputRef}/>
       <button>submit</button>
