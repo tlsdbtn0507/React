@@ -3,7 +3,7 @@ import css from '../css/css.module.css'
 import { TodoContext } from "../store/store";
 
 // const NewTodo:React.FC<{addTodo:(text:string)=>void}> = (props) => {
-const NewTodo:React.FC = () => {
+const NewTodo = () => {
   const todosCtx = useContext(TodoContext);
 
   //HTMLInputElement의 타입을 가진 useRef는 초기값으로 '' 말고 null을 넣어줘야한다

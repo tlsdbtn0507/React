@@ -1,52 +1,29 @@
-import { useEffect, useState } from 'react';
-
+import { useQuery } from '@tanstack/react-query'
 import LoadingIndicator from '../UI/LoadingIndicator.jsx';
 import ErrorBlock from '../UI/ErrorBlock.jsx';
 import EventItem from './EventItem.jsx';
+import { fetchEvents } from '../../util/http.js';
 
 export default function NewEventsSection() {
-  const [data, setData] = useState();
-  const [error, setError] = useState();
-  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    async function fetchEvents() {
-      setIsLoading(true);
-      const response = await fetch('http://localhost:3000/events');
-
-      if (!response.ok) {
-        const error = new Error('An error occurred while fetching the events');
-        error.code = response.status;
-        error.info = await response.json();
-        throw error;
-      }
-
-      const { events } = await response.json();
-
-      return events;
-    }
-
-    fetchEvents()
-      .then((events) => {
-        setData(events);
-      })
-      .catch((error) => {
-        setError(error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
+  const { data, isError , isPending , error /* = errorMsg */ } = useQuery({
+    queryKey:['events'], //queryKey는 겟요청으로 얻은 데이터에 고유 키값을 줘서 일시적으로 캐싱함 
+    queryFn: fetchEvents,
+    staleTime: 10000,
+    //얼마 후에 'events'의 데이터를 stale상태로 두게 할지 설정
+    //stale상태 이후 새로운 쿼리가 마운트 되거나 브라우저 화면이 포커싱되거나 등의 상황이
+    //되면 useQuery로 데이터 fetch 재실행
+  })
 
   let content;
 
-  if (isLoading) {
+  if (isPending) {
     content = <LoadingIndicator />;
   }
 
-  if (error) {
+  if (isError) {
     content = (
-      <ErrorBlock title="An error occurred" message="Failed to fetch events" />
+      <ErrorBlock title="An error occurred" message={error.info?.message || 'failed'} />
     );
   }
 
