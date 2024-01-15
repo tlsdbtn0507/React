@@ -37,3 +37,16 @@ export async function createNewEvent(eventData) {
   const { events } = await response.json();
   return events;
 }
+
+export async function fetchImages({signal}) {
+  const response = await fetch(`${URL}/images`, { signal })
+  
+    if (!response.ok) {
+    const error = new Error('An error occurred while fetching the images');
+    error.code = response.status;
+    error.info = await response.json();
+    throw error;
+  }
+  const { images } = await response.json();
+  return images;
+}
