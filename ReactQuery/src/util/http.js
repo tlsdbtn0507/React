@@ -18,10 +18,11 @@ export async function fetchEvents({ signal, searchTerm }) {
   return events;
 }
 
-export async function createNewEvent(eventData) {
+export async function createNewEvent({eventData,id}) {
   
-  const response = await fetch(URL, {
-    method: 'POST',
+  // const response = await fetch(URL+ id ? `/${id}` :''  , {
+  const response = await fetch(`${URL}${id === undefined ? '' :`/${id}`}`, {
+    method: id !== undefined ? 'PUT' :'POST',
     body: JSON.stringify(eventData),
     headers: {
       'Content-Type' : "application/json"
@@ -49,4 +50,34 @@ export async function fetchImages({signal}) {
   }
   const { images } = await response.json();
   return images;
+}
+
+export async function getEventDetail({ id, signal }) {
+  const res = await fetch(`${URL}/${id}`, { signal });
+
+  if (!res.ok) {
+    const error = new Error('An error occurred while fetching the details of event');
+    error.code = res.status;
+    error.info = await res.json();
+    throw error;
+  }
+  const { event } = await res.json();
+  
+  return event;
+}
+
+export async function deleteEvent({ id }) {
+  const res = await fetch(`${URL}/${id}`, {
+    method:'DELETE'
+  });
+
+  if (!res.ok) {
+    const error = new Error('An error occurred while deleting the event');
+    error.code = res.status;
+    error.info = await res.json();
+    throw error;
+  }
+
+  return res.json()
+
 }

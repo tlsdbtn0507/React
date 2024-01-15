@@ -21,7 +21,7 @@ export default function NewEvent() {
   })
 
   function handleSubmit(formData) {
-    mutate({event:formData})
+    mutate({eventData:formData})
   }
 
   return (
