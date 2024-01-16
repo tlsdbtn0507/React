@@ -9,11 +9,13 @@ const errHandler = async (res) => {
   }
 }
 
-export async function fetchEvents({ signal, searchTerm }) {
+export async function fetchEvents({ signal, searchTerm , max }) {
 
   let url = URL
 
-  if (searchTerm) url += `search=${searchTerm}`;
+  if (searchTerm && max) url += `?search=${searchTerm}` + `&max=${max}`;
+  if (searchTerm) url += `?search=${searchTerm}`;
+  if (max) url += `?max=${max}`;
 
   const response = await fetch(url,{signal:signal});
 
