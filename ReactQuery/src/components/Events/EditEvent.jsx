@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import Modal from '../UI/Modal.jsx';
 import EventForm from './EventForm.jsx';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { createNewEvent, fetchEvents, getEventDetail } from '../../util/http.js';
+import { editEvent , getEventDetail } from '../../util/http.js';
 
 export default function EditEvent() {
   const navigate = useNavigate();
@@ -16,11 +16,14 @@ export default function EditEvent() {
   })
 
   const { mutate } = useMutation({
-    mutationFn:createNewEvent
+    mutationFn: editEvent,
+    
   })
+  
 
   function handleSubmit(formData) {
-    mutate({eventData:formData,id})
+    mutate({id : id, event: formData})
+    navigate('../');
   }
 
   function handleClose() {
